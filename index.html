@@ -1,0 +1,30 @@
+<body>
+    <script src="dist/load-sample-set.js"></script>
+    <script>
+        
+        var dataUrl = 'https://raw.githubusercontent.com/oramics/sampled/master/DM/LM-2/sampled.instrument.json'
+        var ctx  = new AudioContext;
+        var buffers;
+        
+        // Load a sample set as instruments
+        window.onload = loadSampleSet(ctx, dataUrl, function (sampleData, sampleBuffers) {
+            console.log(sampleBuffers.clap);
+            
+            // You now how all instruments as an object, e.g. play the clap: 
+            // sampleBuffers.clap.trigger();
+            
+            // Or just get the 'clap' as bufferSource
+            var clap = sampleBuffers.clap.get();
+            
+            // Connect it 
+            clap.connect(ctx.destination);
+            
+            // start the source playing
+            clap.start();
+            
+            // It uses this small class:             
+            // https://www.npmjs.com/package/audio-buffer-instrument
+
+        });      
+        
+    </script>
