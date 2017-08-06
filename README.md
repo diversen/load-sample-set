@@ -1,6 +1,6 @@
 # load-sample-set
 
-Loads a sample as buffer instruments:
+Loads a set of samples as buffer instruments:
 
 I found this package 
 
@@ -24,6 +24,6 @@ See:
 
 ## Related 
 
-[https://www.npmjs.com/package/audio-buffer-instrument](audio-buffer-instrument)
+[audio-buffer-instrument](https://www.npmjs.com/package/audio-buffer-instrument)
 
 MIT © [Dennis Iversen](https://github.com/diversen)
