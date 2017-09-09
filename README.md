@@ -1,6 +1,6 @@
 # load-sample-set
 
-Loads a set of samples as buffer instruments:
+Loads a set of samples as buffer instruments using `promises`:
 
 I found this package 
 
