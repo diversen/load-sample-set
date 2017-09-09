@@ -5,7 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "audio-buffer-instrument": "^1.0.0",
-    "tiny-sample-loader": "^1.0.1"
+    "tiny-sample-loader": "^2.0.0"
   },
   "devDependencies": {},
   "scripts": {
