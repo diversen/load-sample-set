@@ -54,19 +54,17 @@ function sampleAllPromise(ctx, dataUrl) {
             var samplePromises = getSamplePromises(ctx, data);
             Promise.all(samplePromises).then(function() {
                 resolve({data: data, buffers: buffers});
-            }).catch(e => {
-                console.log(e);
+            }).catch(function (error) {
+                console.log(error);
             });
         }).catch (function (error) {
-            reject('JSON could not be loaded ' + dataUrl);
-        })
+            reject(error);
+        });
     });
 
     return promise;
 }
 
-
-var ctx, dataUrl;
 function loadSampleSet(ctx, dataUrl) {
     return sampleAllPromise(ctx, dataUrl);
 }
