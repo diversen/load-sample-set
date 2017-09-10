@@ -1,14 +1,16 @@
 # load-sample-set
 
-Loads a set of samples as buffer instruments using `promises`:
+Loads a set of samples as buffer instruments using `promises`. 
 
-I found this package 
+It uses this format: 
 
-https://www.npmjs.com/package/sample-loader
+https://github.com/oramics/sampled/blob/master/DM/CR-78/sampled.instrument.json
 
-but I had some problems making it work in a browser. 
+So it is quite easy to make your own sample-sets. 
 
-This loader also uses the same format. 
+I could see that some different packages loads the above json format, but I had problems
+compiling these into a bundle for browser usage, so I made this package in order
+to learn a thing or two about webAudio. 
 
 ## install
 
