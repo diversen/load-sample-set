@@ -2,7 +2,8 @@
     <script src="dist/load-sample-set.js"></script>
     <script>
 
-        var dataUrl = 'https://raw.githubusercontent.com/oramics/sampled/master/DM/LM-2/sampled.instrument.json'
+        //var dataUrl = 'https://raw.githubusercontent.com/oramics/sampled/master/DM/LM-2/sampled.instrument.json'
+        var dataUrl = 'https://cdn.rawgit.com/oramics/sampled/master/DM/LM-2/sampled.instrument.jsons';
         var ctx = new AudioContext;
         var buffers;
 
@@ -12,14 +13,15 @@
 
             var sampleSetPromise = loadSampleSet(ctx, dataUrl);
             sampleSetPromise.then(function (data) {
+
+                console.log(data.data); // Instrument info from json
                 
-                // Data
-                console.log(data.data); // Instrument info
-                
-                // Audio buffers
+                // All Audio buffers loaded
                 console.log(data.buffers);
                 
-                // Get instrument
+                // Get as an Instrument
+                // It uses this small class:             
+                // https://www.npmjs.com/package/audio-buffer-instrument
                 var clap = data.buffers.clap.get();
                 
                 console.log(clap);
@@ -30,9 +32,8 @@
                 // start the source playing
                 clap.start();
 
-                // It uses this small class:             
-                // https://www.npmjs.com/package/audio-buffer-instrument
-
+            }).catch(function(err) {
+                console.log(err);
             });
 
         };

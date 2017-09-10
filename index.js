@@ -67,7 +67,7 @@ function sampleAllPromise(ctx, dataUrl) {
 
 
 var ctx, dataUrl;
-function loadSampleSet(ctx, dataUrl, cb) {
+function loadSampleSet(ctx, dataUrl) {
     return sampleAllPromise(ctx, dataUrl);
 }
 
