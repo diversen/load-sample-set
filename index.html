@@ -20,7 +20,7 @@
                 console.log(data.buffers);
                 
                 // Get a single buffer           
-                var clap = data.buffers.clap;
+                var clap = data.buffers.clap.get();
 
                 // Connect it 
                 clap.connect(ctx.destination);

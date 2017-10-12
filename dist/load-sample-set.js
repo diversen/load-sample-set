@@ -17,7 +17,7 @@ function getSamplePromises (ctx, data) {
 
         let loaderPromise = tinySampleLoader(remoteUrl, ctx);
         loaderPromise.then(function (buffer) {
-            buffers[filename] = audioBufferInstrument(ctx, buffer);
+            buffers[filename] = new audioBufferInstrument(ctx, buffer);
         });
 
         promises.push(loaderPromise);
@@ -52,14 +52,30 @@ function loadSampleSet(ctx, dataUrl) {
 module.exports = loadSampleSet;
 
 },{"audio-buffer-instrument":2,"get-json-promise":3,"tiny-sample-loader":4}],2:[function(require,module,exports){
+// From: https://dev.opera.com/articles/drum-sounds-webaudio/
 function audioBufferInstrument(context, buffer) {
-    var source = context.createBufferSource();
-    source.buffer = buffer;
-    return source;
+    this.context = context;
+    this.buffer = buffer;
 }
 
-module.exports = audioBufferInstrument;
+audioBufferInstrument.prototype.setup = function () {
+    this.source = this.context.createBufferSource();
+    this.source.buffer = this.buffer;
+    this.source.connect(this.context.destination);
+};
 
+audioBufferInstrument.prototype.get = function () {
+    this.source = this.context.createBufferSource();
+    this.source.buffer = this.buffer;
+    return this.source;
+};
+
+audioBufferInstrument.prototype.trigger = function (time) {
+    this.setup();
+    this.source.start(time);
+};
+
+module.exports = audioBufferInstrument;
 },{}],3:[function(require,module,exports){
 function getJSONPromise(url) {
 
