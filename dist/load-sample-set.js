@@ -1,26 +1,7 @@
-/* Package: load-sample-set. Version: 2.0.3. License: MIT. Author: dennis iversen. Homepage: https://github.com/diversen/load-sample-set#readme   */ (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.loadSampleSet = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+/* Package: load-sample-set. Version: 3.0.0. License: MIT. Author: dennis iversen. Homepage: https://github.com/diversen/load-sample-set#readme   */ (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.loadSampleSet = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 var tinySampleLoader = require('tiny-sample-loader');
 var audioBufferInstrument = require('audio-buffer-instrument');
-
-function getJSON(url) {
-
-    var promise = new Promise((resolve, reject) => {
-        var request = new XMLHttpRequest();
-
-        request.open('get', url, true);
-        request.responseType = 'text';
-        request.onload = function () {
-            if (request.status === 200) {
-                resolve(JSON.parse(request.responseText));
-            } else {
-                reject('JSON could not be loaded ' + url);
-            }
-        };
-        request.send();
-    });
-
-    return promise;
-}
+var getJSON = require('get-json-promise');
 
 var buffers = {};
 function getSamplePromises (ctx, data) {
@@ -36,7 +17,7 @@ function getSamplePromises (ctx, data) {
 
         let loaderPromise = tinySampleLoader(remoteUrl, ctx);
         loaderPromise.then(function (buffer) {
-            buffers[filename] = new audioBufferInstrument(ctx, buffer);
+            buffers[filename] = audioBufferInstrument(ctx, buffer);
         });
 
         promises.push(loaderPromise);
@@ -44,12 +25,10 @@ function getSamplePromises (ctx, data) {
     });
     
     return promises;
-
 }
 
 function sampleAllPromise(ctx, dataUrl) {
     var promise = new Promise((resolve, reject) => {
-        
         var jsonPromise = getJSON(dataUrl);
         jsonPromise.then(function(data) {
             var samplePromises = getSamplePromises(ctx, data);
@@ -71,33 +50,40 @@ function loadSampleSet(ctx, dataUrl) {
 }
 
 module.exports = loadSampleSet;
-},{"audio-buffer-instrument":2,"tiny-sample-loader":3}],2:[function(require,module,exports){
-// From: https://dev.opera.com/articles/drum-sounds-webaudio/
-function Instrument(context, buffer) {
-    this.context = context;
-    this.buffer = buffer;
+
+},{"audio-buffer-instrument":2,"get-json-promise":3,"tiny-sample-loader":4}],2:[function(require,module,exports){
+function audioBufferInstrument(context, buffer) {
+    var source = context.createBufferSource();
+    source.buffer = buffer;
+    return source;
 }
 
-Instrument.prototype.setup = function () {
-    this.source = this.context.createBufferSource();
-    this.source.buffer = this.buffer;
-    this.source.connect(this.context.destination);
-};
-
-Instrument.prototype.get = function () {
-    this.source = this.context.createBufferSource();
-    this.source.buffer = this.buffer;
-    return this.source;
-};
-
-Instrument.prototype.trigger = function (time) {
-    this.setup();
-    this.source.start(time);
-};
-
-module.exports = Instrument;
+module.exports = audioBufferInstrument;
 
 },{}],3:[function(require,module,exports){
+function getJSONPromise(url) {
+
+    var promise = new Promise((resolve, reject) => {
+        var request = new XMLHttpRequest();
+
+        request.open('get', url, true);
+        request.responseType = 'text';
+        request.onload = function () {
+            if (request.status === 200) {
+                resolve(JSON.parse(request.responseText));
+            } else {
+                reject('JSON could not be loaded ' + url);
+            }
+        };
+        request.send();
+    });
+
+    return promise;
+}
+
+module.exports = getJSONPromise;
+
+},{}],4:[function(require,module,exports){
 function sampleLoader (url, context) {
     
     var promise = new Promise((resolve, reject) => { 

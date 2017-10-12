@@ -1,25 +1,6 @@
 var tinySampleLoader = require('tiny-sample-loader');
 var audioBufferInstrument = require('audio-buffer-instrument');
-
-function getJSON(url) {
-
-    var promise = new Promise((resolve, reject) => {
-        var request = new XMLHttpRequest();
-
-        request.open('get', url, true);
-        request.responseType = 'text';
-        request.onload = function () {
-            if (request.status === 200) {
-                resolve(JSON.parse(request.responseText));
-            } else {
-                reject('JSON could not be loaded ' + url);
-            }
-        };
-        request.send();
-    });
-
-    return promise;
-}
+var getJSON = require('get-json-promise');
 
 var buffers = {};
 function getSamplePromises (ctx, data) {
@@ -35,7 +16,7 @@ function getSamplePromises (ctx, data) {
 
         let loaderPromise = tinySampleLoader(remoteUrl, ctx);
         loaderPromise.then(function (buffer) {
-            buffers[filename] = new audioBufferInstrument(ctx, buffer);
+            buffers[filename] = audioBufferInstrument(ctx, buffer);
         });
 
         promises.push(loaderPromise);
@@ -43,12 +24,10 @@ function getSamplePromises (ctx, data) {
     });
     
     return promises;
-
 }
 
 function sampleAllPromise(ctx, dataUrl) {
     var promise = new Promise((resolve, reject) => {
-        
         var jsonPromise = getJSON(dataUrl);
         jsonPromise.then(function(data) {
             var samplePromises = getSamplePromises(ctx, data);

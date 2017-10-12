@@ -1,10 +1,11 @@
 {
   "name": "load-sample-set",
-  "version": "2.0.3",
+  "version": "3.0.0",
   "description": "load a set of samples in connection with an audio context",
   "main": "index.js",
   "dependencies": {
-    "audio-buffer-instrument": "^1.0.0",
+    "audio-buffer-instrument": "^2.0.0",
+    "get-json-promise": "^1.0.3",
     "tiny-sample-loader": "^2.0.0"
   },
   "devDependencies": {},

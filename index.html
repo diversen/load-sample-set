@@ -19,12 +19,8 @@
                 // All Audio buffers loaded
                 console.log(data.buffers);
                 
-                // Get as an Instrument
-                // It uses this small class:             
-                // https://www.npmjs.com/package/audio-buffer-instrument
-                var clap = data.buffers.clap.get();
-                
-                console.log(clap);
+                // Get a single buffer           
+                var clap = data.buffers.clap;
 
                 // Connect it 
                 clap.connect(ctx.destination);

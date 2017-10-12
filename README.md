@@ -9,8 +9,7 @@ https://github.com/oramics/sampled/blob/master/DM/CR-78/sampled.instrument.json
 So it is quite easy to make your own sample-sets. 
 
 I could see that some different packages loads the above json format, but I had problems
-compiling these into a bundle for browser usage, so I made this package in order
-to learn a thing or two about webAudio. 
+compiling these into a bundle for browser usage, so I made this package.  
 
 ## install
 
