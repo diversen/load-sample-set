@@ -14,7 +14,7 @@ function getSamplePromises (ctx, data) {
         data.filename.push(filename);
         var remoteUrl = baseUrl + val;
 
-        let loaderPromise = tinySampleLoader(remoteUrl, ctx);
+        let loaderPromise = tinySampleLoader(ctx, remoteUrl);
         loaderPromise.then(function (buffer) {
             buffers[filename] = new audioBufferInstrument(ctx, buffer);
         });

@@ -1,4 +1,4 @@
-/* Package: load-sample-set. Version: 3.0.0. License: MIT. Author: dennis iversen. Homepage: https://github.com/diversen/load-sample-set#readme   */ (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.loadSampleSet = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+/* Package: load-sample-set. Version: 4.0.1. License: MIT. Author: dennis iversen. Homepage: https://github.com/diversen/load-sample-set#readme   */ (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.loadSampleSet = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 var tinySampleLoader = require('tiny-sample-loader');
 var audioBufferInstrument = require('audio-buffer-instrument');
 var getJSON = require('get-json-promise');
@@ -15,7 +15,7 @@ function getSamplePromises (ctx, data) {
         data.filename.push(filename);
         var remoteUrl = baseUrl + val;
 
-        let loaderPromise = tinySampleLoader(remoteUrl, ctx);
+        let loaderPromise = tinySampleLoader(ctx, remoteUrl);
         loaderPromise.then(function (buffer) {
             buffers[filename] = new audioBufferInstrument(ctx, buffer);
         });
@@ -100,7 +100,7 @@ function getJSONPromise(url) {
 module.exports = getJSONPromise;
 
 },{}],4:[function(require,module,exports){
-function sampleLoader (url, context) {
+function sampleLoader (context, url) {
     
     var promise = new Promise((resolve, reject) => { 
         var request = new XMLHttpRequest();
@@ -122,6 +122,8 @@ function sampleLoader (url, context) {
     
     return promise;
 };
+
 module.exports = sampleLoader;
+
 },{}]},{},[1])(1)
 });
