@@ -1,6 +1,6 @@
 {
   "name": "load-sample-set",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "description": "load a set of samples in connection with an audio context",
   "main": "index.js",
   "dependencies": {
